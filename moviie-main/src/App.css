@@ -1,23 +1,55 @@
 :root {
-    font-family: "Dela Gothic One", sans-serif;
+    /*MOVIIES colour palette */
+    --color-nude: #DCC3A8;
+    --color-milky-beige: #EAD8C3;
+    --color-wine: #741F2A;
+    --color-burgundy: #43151D;
+    --color-charcoal: #211C1B;
+
+    /* Backgrounds */
+    --color-background: var(--color-nude);
+    --color-surface: var(--color-milky-beige);
+    
+    /* Typography */
+    --font-heading: Georgia, serif;
+    --font-body: Arial, sans-serif;
+
+    font-family: var(--font-body);
     font-weight: 400;
     font-style: normal;
+    :root {
+        --button-background: #741F2A;
+        --button-hover: #8B303B;
+        --button-text: #EAD8C3;
+        --button-border: #DCC3A8;
+    }
+
 }
 
 .root_gradient-background {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(180deg,
-            #470a16 0%,
-            hsl(0, 62%, 36%) 13%,
-            rgb(from lab(37.29% 30.63 14.44) r g b / 84%) 26%,
-            rgb(from hsl(0, 22%, 57%) r g b / 69%) 33%,
-            rgb(from hsl(0, 24%, 68%) r g b / 0%) 60%,
-            rgb(from hsl(0, 24%, 68%) r g b / 0%) 100%);
-    z-index: -1;
+inset: 0;
+width: 100%;
+height: 100%;
+background:
+    radial-gradient(
+        ellipse at 85% 75%,
+        rgba(190, 75, 91, 0.28) 0%,
+        transparent 48%
+    ),
+    radial-gradient(
+        ellipse at 50% 0%,
+        rgba(116, 31, 42, 0.65) 0%,
+        transparent 55%
+    ),
+    linear-gradient(
+        160deg,
+        #211C1B 0%,
+        #43151D 48%,
+        #211C1B 100%
+    );
+
+z-index: -1;
 }
 
 .main {
@@ -26,16 +58,18 @@
     height: 100vh;
     align-items: center;
     justify-content: center;
-    gap: 70px;
+    gap: 25px;
 }
 
 .main_title {
-    font-size: 35px;
-    color: hsl(0, 80%, 21%);
+    text-transform: uppercase;
+    font-size: clamp(56px, 7vw, 96px);
+    color: #DCC3A8;
+    transform: scaleX(1.2s5);
 }
 
 .main_name {
-    width: 275px;
+    width: 340px;
     padding: 3px;
     border-radius: 20px;
     border: 2px solid #ffffff;
@@ -48,7 +82,7 @@
     flex: 1;
     background-color: transparent;
     padding-left: 15px;
-    color: brown;
+    color: #DCC3A8;
 }
 
 .main_button {
@@ -934,4 +968,28 @@ button:disabled {
         transition: none !important;
         animation: none !important;
     }
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.intro__footer {
+    color: #DCC3A8;
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
 }

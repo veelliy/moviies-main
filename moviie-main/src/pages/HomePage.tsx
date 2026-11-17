@@ -19,7 +19,6 @@ function HomePage () {
          <main className="main">
         <h1 className="main_title">moviies</h1>
         <Input value={name} onChange={setName} onClick={handleSaveName}/>
-        <p className="main_description">Выбери что ты будешь смотреть</p>
        </main> 
        </Intro>
        );
