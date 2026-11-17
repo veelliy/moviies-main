@@ -1,0 +1,29 @@
+[
+    {"id": "m01", "title": "Коралина в Стране Кошмаров", "year": 2009, "genre": "Анимация · Триллер", "poster": "/coraline.jpg"},
+    {"id": "m02", "title": "Пятница 13", "year": 2009, "genre": "Слешер · Триллер", "poster": "/friday13.webp"},
+    {"id": "m03", "title": "Кошмар на улице Вязов", "year": 1984, "genre": "Слешер · Триллер", "poster": "/ANightmare2010-poster.jpg"},
+    {"id": "m04", "title": "Таро", "year": 2024, "genre": "Слешер · Триллер", "poster": "/taro.jpg"},
+    {
+        "id": "m05",
+        "title": "Коллекционер",
+        "year": 2009,
+        "genre": "Хоррор · Триллер",
+        "poster": "/collector.jpg"
+    },
+    {
+        "id": "m06",
+        "title": "Человек Паук : Новый день",
+        "year": 2026,
+        "genre": "Анимация · Приключения",
+        "poster": "/SPIDERR.jpg"
+    },
+    {"id": "m07", "title": "Долли", "year": 2026, "genre": "Слешер · Триллер", "poster": "/DOLLY.jpg"},
+    {"id": "m08", "title": "Исчезнувшая", "year": 2014, "genre": "Хоррор · Триллер", "poster": "/loose.jpg"},
+    {"id": "m09", "title": "Остров проклятых", "year": 2010, "genre": "Триллер · Детектив", "poster": "/shutterisland.webp"},
+    {"id": "m10", "title": "Престиж", "year": 2006, "genre": "Триллер · Детектив", "poster": "/prestige.jpg"},
+    {"id": "m11", "title": "Собиратель душ", "year": 2024, "genre": "Хоррор · Триллер", "poster": "/collectorsouls.jpg"},
+    {"id": "m12", "title": "Полночь с дьяволом", "year": 2017, "genre": "Хоррор · Триллер", "poster": "/moonlightdevil.jpg"},
+    {"id": "m13", "title": "Убойные каникулы", "year": 2010, "genre": "Ужасы · Комедия", "poster": "/lasst.jpg"},
+    {"id": "m14", "title": "Спуск", "year": 2005, "genre": "Хоррор · Триллер", "poster": "/The_Descent_movie_poster.jpg"},
+    {"id": "m15", "title": "Хеллоуин", "year": 1978, "genre": "Слешер · Хоррор", "poster": "/halloween.webp"}
+]
