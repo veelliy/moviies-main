@@ -9,13 +9,13 @@ function JoinPage() {
    const loc = useLocation();
    const encoded = new URLSearchParams(loc.hash.slice(1)).get("s");
    const invitation = encoded ? decodeInvitation(encoded) : null;
-   const [name, setName] = useState(getName());
+   const [name, setName] = useState("");
 
     if (!invitation) {
          return (
              <Intro>
                 <div className="center-block">
-               <h2>Приглашение не найдено</h2>
+               <h2>Invitation not found</h2>
             </div>
          </Intro>
       );
@@ -34,8 +34,8 @@ function JoinPage() {
          <div
             className="join-form"
          >
-            <h2>{invitation.name} приглашает выбрать кино вместе!</h2>
-            <p>Оцените те же 15 фильмов, и мы найдём совпадения</p>
+            <h2>{invitation.name} invites you to pick a movie together!</h2>
+            <p>Let's compare your favourite movies and find a movie you'll both enjoy!</p>
 
 
             <Input value={name} onChange={setName} onClick={handleSaveName} />

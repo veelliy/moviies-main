@@ -81,12 +81,12 @@ export default function RandomMovie({
         return (
 
             <section className="random-movie">
-                <h2>🎲 Случайный фильм</h2>
+                <h2> Random movie</h2>
                 <p>
-                    У вас пока нет общих любимых фильмов.
+                    You don't have any shared favorites yet.
                 </p>
                 <button disabled>
-                    Нет совпадений
+                    No matches yet
                 </button>
             </section>
 
@@ -98,11 +98,11 @@ export default function RandomMovie({
 
         <section className="random-movie">
 
-            <h2>🎲 Не можете определиться?</h2>
+            <h2>Can't decide?</h2>
 
             <p>
 
-                Доверьте выбор случайности!
+                Let fate choose for you!
 
             </p>
 
@@ -118,13 +118,13 @@ export default function RandomMovie({
 
                 {isRolling
 
-                    ? "Выбираем фильм..."
+                    ? "Choosing a movie..."
 
                     : selectedMovie
 
-                        ? "Выбрать другой фильм"
+                        ? "Choose another movie"
 
-                        : "🎬 Случайный фильм"}
+                        : "Random movie"}
 
             </button>
 
@@ -132,7 +132,7 @@ export default function RandomMovie({
 
                 <div className="random-movie__result">
 
-                    <h3>Ваш фильм на сегодня!</h3>
+                    <h3>Your movie for tonight!</h3>
 
                     {(selectedMovie.posterUrl ||
 
@@ -153,7 +153,7 @@ export default function RandomMovie({
                                 alt={selectedMovie.title}
 
                             />)
-                    };
+                    }
 
                     {
                         <h2>{selectedMovie.title}</h2>

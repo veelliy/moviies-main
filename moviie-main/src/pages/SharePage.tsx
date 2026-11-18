@@ -30,17 +30,17 @@ function SharePage () {
     return(
         <Intro>
          <div className="qr-content">
-            <h2>Отсканируйте QR-код, чтобы подключиться</h2>
+            <h2>Scan the QR code to join</h2>
             <div className="qr-square">
                <QRCodeSVG value={link} size={206} marginSize={1} />
             </div>
-            <p>Передайте ссылку второму игроку</p>
+            <p>Share the link with the second player</p>
             <button className="outline-button" onClick={copy}>
                <Copy size={18} />
-               {copied ? "Скопировано" : "Скопировать ссылку"}
+               {copied ? "Copied!" : "Copy Link"}
             </button>
             <button className="text-button" onClick={same}>
-               Продолжить на этом телефоне
+               Continue on this device
             </button>
          </div>
       </Intro> 

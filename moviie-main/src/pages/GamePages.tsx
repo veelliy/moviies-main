@@ -55,19 +55,13 @@ function GamePage() {
                   </div>
                </Fragment>
             )}
-            <div className="bottom-actions">
-               <button onClick={undo} disabled={!session.votes.length}>
-                  <RotateCcw size={17} /> Отменить
-               </button>
-               <button
-                  onClick={() => {
-                     nav(session.role === 1 ? "/share" : "/result", { replace: true });
-                  }}
-                  disabled={session.votes.length !== session.order.length}
-               >
-                  Завершить
-               </button>
-            </div>
+            {session.votes.length > 0 && (
+   <div className="bottom-actions">
+      <button onClick={undo} disabled={locked}>
+         <RotateCcw size={17} /> Cancel
+      </button>
+   </div>
+)}
          </div>
       </main>
    );

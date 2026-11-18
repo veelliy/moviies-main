@@ -49,7 +49,20 @@ background:
         #211C1B 100%
     );
 
-z-index: -1;
+z-index: 0;
+pointer-events: none;
+pointer-events: none;
+}
+
+#root {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+}
+
+#root > *:not(.root_gradient-background) {
+    position: relative;
+    z-index: 1;
 }
 
 .main {
@@ -91,7 +104,7 @@ z-index: -1;
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: white;
-    color: #470a16(133, 30, 30);
+    color: #470a16;
 }
 
 .main_description {
@@ -159,7 +172,7 @@ button:disabled {
 }
 
 .workspace {
-    background: linear-gradient(180deg, #490606 0, hwb(0 29% 34%) 10%, #fff 24%);
+    background: transparent;
 }
 
 .header {
@@ -383,22 +396,29 @@ button:disabled {
 .vote-stamp {
     position: absolute;
     top: 65px;
-    font-size: 20px;
-    border: 4px solid;
-    border-radius: 8px;
-    padding: 8px;
-    transform: rotate(-15deg);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 9px 14px;
+    background: rgba(33, 28, 27, 0.85);
+    backdrop-filter: blur(8px);
+    text-transform: uppercase;
 }
 
 .vote-stamp--yes {
     left: 15px;
-    color: #ffffff;
+    color: #e8c6c9;
+    border-color: #e8c6c9;
+    transform: rotate(-12deg);
 }
 
 .vote-stamp--no {
     right: 15px;
-    color: #ffffff(0 100% 0%);
-    transform: rotate(15deg);
+    color: #d99aa5;
+    border-color: #d99aa5;
+    transform: rotate(12deg);
 }
 
 .drag-hotspot {
@@ -423,23 +443,46 @@ button:disabled {
 
 .vote-buttons button {
     height: 107px;
-    border: 0;
-    border-radius: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 22px;
     display: grid;
     place-items: center;
+    transition: all 0.25s ease;
 }
 
 .vote-buttons .no {
-    background: #6e0a0a;
-    color: hsl(359, 34%, 65%)
+    background: #292123;
+    color: #b98d91;
+    border: 1px solid rgba(185, 141, 145, 0.55);
 }
 
 .vote-buttons .yes {
-    background: hsl(359, 34%, 65%);
-    color: #6e0a0a;
+    background: #292123;
+    color: #eee3d7;
+    border: 1px solid rgba(238, 227, 215, 0.55);
 }
 
-.bottom-actions,
+.vote-buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+}
+
+.vote-buttons button:active {
+    transform: scale(0.97);
+}
+
+.vote-buttons svg {
+    width: 48px;
+    height: 48px;
+    stroke-width: 1.7;
+}
+
+.bottom-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
 .result-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -447,18 +490,40 @@ button:disabled {
     margin-top: 23px;
 }
 
-.bottom-actions button,
-.result-footer button {
-    border: 0;
-    border-radius: 16px;
-    background: #6e0a0a;
-    color: white;
-    font-size: 13px;
-    padding: 7px 3px;
+.bottom-actions button {
+    width: 148px;
+    min-height: 40px;
+    padding: 8px 18px;
+    border: 1px solid rgba(220, 195, 180, 0.45);
+    border-radius: 24px;
+    background: #493039;
+    color: #eee3d7;
+    font-size: 14px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 9px;
+    transition: all 0.25s ease;
+}
+
+.bottom-actions button:hover {
+    background: #5a3945;
+    border-color: #d4b9a9;
+}
+.result-footer button {
+    border: 1px solid rgba(220, 195, 180, 0.45);
+    border-radius: 24px;
+    background: #493039;
+    color: #eee3d7;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s ease;
 }
 
 
@@ -477,6 +542,7 @@ button:disabled {
     font-weight: 700;
     text-align: center;
     margin-bottom: 20px;
+    color: #eee3d7;
 }
 
 /* Единый размер постеров фильмов */
@@ -525,7 +591,7 @@ button:disabled {
 }
 
 .random-movie-button:hover {
-    background: #470A16;
+    background: #eee3d7;
     transform: translateY(-2px);
 }
 
@@ -538,10 +604,13 @@ button:disabled {
     max-width: 320px;
     padding: 20px;
     background: #FFFFFF;
+    color: #eee3d7;
     border: 1px solid #E5CDD3;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(71, 10, 22, 0.08);
     animation: movieAppear 0.4s ease;
+    margin-top: 30px;
+    padding-top: 22px;
 }
 
 .random-movie-result img {
@@ -552,14 +621,14 @@ button:disabled {
 }
 
 .random-movie-result h2 {
-    color: #470A16;
+    color: #eee3d7;
     font-size: 21px;
     text-align: center;
     margin: 5px 0;
 }
 
 .random-movie-result p {
-    color: #9B7A85;
+    color: #c3a6a8;
     font-size: 14px;
     text-align: center;
 }
@@ -603,20 +672,21 @@ button:disabled {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    padding: 12px 22px;
-    background: #6E0A0A;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 14px;
-    font-size: 15px;
+    gap: 8px;
+    padding: 9px 17px;
+    background: #292123;
+    color: #eee3d7;
+    border: 1px solid rgba(220, 195, 180, 0.45);
+    border-radius: 24px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.25s ease;
 }
 
 .result-top-actions button:hover {
-    background: #470A16;
+    background: #493039;
+    border-color: #d4b9a9;
     transform: translateY(-2px);
 }
 
@@ -636,6 +706,7 @@ button:disabled {
     border-radius: 22px;
     box-shadow: 0 8px 25px rgba(71, 10, 22, 0.08);
     animation: movieAppear 0.4s ease;
+    padding-top: 15px;
 }
 
 .random-movie-result img {
@@ -708,8 +779,10 @@ button:disabled {
 
 .qr-content h2,
 .scan-content h2 {
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 19px;
+    line-height: 1.5;
+    font-weight: 600;
+    color: #eee3d7;
     margin: 0;
 }
 
@@ -717,9 +790,9 @@ button:disabled {
 .join-form p,
 .scan-content p {
     font-family: system-ui, sans-serif;
-    color: #9b7a85;
-    font-size: 14px;
-    line-height: 1.5;
+    color: #c3a6a8;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 .qr-square {
@@ -728,30 +801,44 @@ button:disabled {
     background: #fff;
     display: grid;
     place-items: center;
-    border: 1px solid #470a16;
+    border: 1px solid rgba(220, 195, 180, 0.45);
+    border-radius: 16px;
     padding: 10px;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .outline-button {
     display: flex;
-    gap: 8px;
+    gap: 9px;
     align-items: center;
     justify-content: center;
-    border: 2px solid hsl(0, 24%, 54%);
-    color: #470a16;
-    background: #fff;
-    padding: 10px 20px;
+    border: 1px solid rgba(220, 195, 180, 0.55);
+    color: #eee3d7;
+    background: #493039;
+    padding: 11px 22px;
     border-radius: 24px;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.outline-button:hover {
+    background: #5a3945;
+    border-color: #d4b9a9;
 }
 
 .text-button {
     border: 0;
     background: transparent;
-    color: #490606;
+    color: #c3a6a8;
     text-decoration: underline;
-    font-size: 12px;
+    font-size: 13px;
+    padding: 8px 12px;
+    transition: color 0.25s ease;
+}
+
+.text-button:hover {
+    color: #eee3d7;
 }
 
 .join-form {
@@ -822,15 +909,16 @@ button:disabled {
 
 .result-tabs button {
     font-size: 14px;
-    color: hwb(0 43% 35%);
+    color: #c3a6a8;
     border: 0;
     background: transparent;
-    padding: 0 0 7px;
+    padding: 0 0 8px;
     white-space: nowrap;
+    transition: color 0.25s ease;
 }
 
 .result-tabs button.active {
-    border-bottom: 2px solid hsl(0, 24%, 54%);
+    border-bottom: 2px solid #eee3d7;
 }
 
 .person-tabs {
@@ -841,18 +929,19 @@ button:disabled {
 }
 
 .person-tabs button {
-    border: 1px solid #73a66e;
-    border-radius: 12px;
-    padding: 7px 9px;
-    font-size: 10px;
+    border: 1px solid rgba(195, 166, 168, 0.4);
+    border-radius: 18px;
+    padding: 8px 14px;
+    font-size: 12px;
     white-space: nowrap;
-    background: #fff;
-    color: hsl(0, 24%, 54%);
+    background: #292123;
+    color: #c3a6a8;
 }
 
 .person-tabs button.selected {
-    background: hsl(0, 24%, 54%);
-    color: white;
+    background: #493039;
+    color: #eee3d7;
+    border-color: #c49b9e;
 }
 
 .movie-grid {
@@ -890,16 +979,29 @@ button:disabled {
     text-align: center;
     margin-top: 70px;
     font-family: system-ui, sans-serif;
-    color: hsl(0, 19%, 49%);
+    color: #c3a6a8;
 }
 
 .empty-state h2 {
     font-size: 18px;
     font-family: "Dela Gothic One", sans-serif;
+    color: #eee3d7;
+}
+
+.empty-state p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #eee3d7
 }
 
 .result-footer {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
     margin-top: 30px;
+    flex-wrap: wrap;
+    color: #eee3d7;
 }
 
 .center-block {

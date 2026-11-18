@@ -21,9 +21,9 @@ function ResultPage() {
         return (
             <Intro>
                 <div className="center-block">
-                    <h2>Пока нет результатов</h2>
+                    <h2>No results yet</h2>
                     <button className="primary" onClick={() => nav("/")}>
-                        На главную
+                        Back to Home
                     </button>
                 </div>
             </Intro>
@@ -43,17 +43,17 @@ function ResultPage() {
                 <div className="result-top-actions">
                     <button onClick={handleRestart}>
                         <RotateCcw size={16} />
-                        Начать заново
+                        Srart over
                     </button>
                 </div>
             )}
             <section className="result-area">
                 <nav className="result-tabs">
                     <button className={tab === "matches" ? "active" : ""} onClick={() => setTab("matches")}>
-                        Совпадения
+                        Our matches
                     </button>
                     <button className={tab === "personal" ? "active" : ""} onClick={() => setTab("personal")}>
-                        Мой результат
+                        Personal picks
                     </button>
                 </nav>
                 {tab === "personal" && (
@@ -82,8 +82,8 @@ function ResultPage() {
                 ) : (
                     <div className="empty-state">
                         <HeartCrack size={50} />
-                        <h2>Пока нет совпадений</h2>
-                        <p>Может быть, вы выберете что-то новое в следующий раз?</p>
+                        <h2>No matches yet</h2>
+                        <p>Maybe you'll discover something new together next time?</p>
                     </div>
                 )}
                 <div className="result-footer">
@@ -93,7 +93,7 @@ function ResultPage() {
                             nav("/");
                         }}
                     >
-                        <RotateCcw size={16} /> Начать снова
+                        <RotateCcw size={16} /> Start over
                     </button>
                     {tab === "matches" && commonMovies.length > 0 && (
                         <RandomMovie matches={commonMovies} onMovieSelected={() => setRandomMovieChosen(true)} />)}

@@ -1,7 +1,14 @@
 import "./App.css";
-import { AppRouter } from "./app/router/router"; 
+import { AppRouter } from "./app/router/router";
+import { GradientBackground } from "./companents/GradientBackground";
+
 function App() {
-  return <AppRouter />;
+    return (
+        <>
+            <GradientBackground />
+            <AppRouter />
+        </>
+    );
 }
 
-export default App
+export default App;
