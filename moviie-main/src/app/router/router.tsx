@@ -5,6 +5,7 @@ import { JoinPage } from "../../pages/JoinPage";
 import { ResultPage } from "../../pages/ResultPage";
 import { SharePage } from "../../pages/SharePage";
 import { WatchTogetherPage } from "../../pages/WatchTogether";
+import { FavouritesPage } from "../../pages/FavouritesPage";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/watch-together",
         element: <WatchTogetherPage />
+    },
+    {
+        path: "/favourites",
+        element: <FavouritesPage />
     }
 ]);
 

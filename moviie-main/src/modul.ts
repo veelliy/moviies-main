@@ -25,6 +25,65 @@ export type Session = {
 };
 
 export const movies: Movie[] = data;
+// ================================
+// FAVOURITES
+// ================================
+
+const FAVOURITES_KEY = "moviies:favourites:v1";
+
+// Get all favourite movie IDs
+export const getFavourites = (): string[] => {
+try {
+const saved = localStorage.getItem(FAVOURITES_KEY);
+
+    if (!saved) return [];
+
+    const parsed = JSON.parse(saved);
+
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed.filter(
+        (id): id is string =>
+            typeof id === "string" &&
+            movieIds.has(id)
+    );
+} catch {
+    return [];
+}
+};
+
+// Save favourite movie IDs
+export const saveFavourites = (ids: string[]) => {
+const validIds = [...new Set(ids)].filter(
+(id) => movieIds.has(id)
+);
+
+localStorage.setItem(
+    FAVOURITES_KEY,
+    JSON.stringify(validIds)
+);
+};
+
+// Add a movie to favourites
+export const addFavourite = (id: string) => {
+const current = getFavourites();
+
+if (!movieIds.has(id) || current.includes(id)) return;
+
+saveFavourites([...current, id]);
+};
+
+// Remove a movie from favourites
+export const removeFavourite = (id: string) => {
+saveFavourites(
+getFavourites().filter((movieId) => movieId !== id)
+);
+};
+
+// Check whether a movie is a favourite
+export const isFavourite = (id: string): boolean => {
+return getFavourites().includes(id);
+};
 export const movieIds = new Set(movies.map((m) => m.id));
 const KEY = "swipey:session:v1";
 
