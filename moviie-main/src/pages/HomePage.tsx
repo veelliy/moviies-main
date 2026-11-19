@@ -38,7 +38,7 @@ return (
                 <nav className="home-nav">
                     <Link to="/">Discover</Link>
                     <Link to="/favourites">Favourites</Link>
-                    <Link to="/watch-together">Watch Together</Link>
+                    <Link to="/the-choice">The Choice</Link>
                 </nav>
             </header>
 
@@ -145,7 +145,7 @@ return (
                 </div>
 
                 <Link
-                    to="/watch-together"
+                    to="/the-choice"
                     className="home-watch-button"
                 >
                     Start Watch Together
@@ -170,7 +170,7 @@ return (
                     <span>♡</span>
                     Favourites
                 </Link>
-                <Link to="/watch-together" className="home-mobile-nav-item">
+                <Link to="/the-choice" className="home-mobile-nav-item">
                     <span>＋</span>
                     Together
                 </Link>

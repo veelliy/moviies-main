@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         element: <JoinPage/>, 
     },
     {
-        path: "/watch-together",
+        path: "/the-choice",
         element: <WatchTogetherPage />
     },
     {

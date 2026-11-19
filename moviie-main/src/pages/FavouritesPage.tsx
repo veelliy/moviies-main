@@ -1,20 +1,40 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Intro } from "../companents/Intro";
+import { Poster } from "../companents/Poster";
+import {
+movies,
+getFavourites,
+removeFavourite
+} from "../modul";
 
 function FavouritesPage() {
+const [favouriteIds, setFavouriteIds] = useState<string[]>(
+() => getFavourites()
+);
+const favouriteMovies = movies.filter((movie) =>
+    favouriteIds.includes(movie.id)
+);
+
+const handleRemove = (id: string) => {
+    removeFavourite(id);
+    setFavouriteIds((current) =>
+        current.filter((movieId) => movieId !== id)
+    );
+};
+
 return (
-     <Intro>
+    <Intro>
         <main className="favourites-page">
             <header className="favourites-header">
                 <Link to="/" className="favourites-logo">
-                  moviies
+                    moviies
                 </Link>
+
                 <nav className="favourites-nav">
                     <Link to="/">Discover</Link>
                     <Link to="/favourites">Favourites</Link>
-                    <Link to="/watch-together">
-                        Watch Together
-                    </Link>
+                    <Link to="/the-choice">The Choice</Link>
                 </nav>
             </header>
 
@@ -32,26 +52,54 @@ return (
             </section>
 
             <section className="favourites-content">
-                <div className="favourites-empty">
-                    <span className="favourites-symbol">♡</span>
+                {favouriteMovies.length > 0 ? (
+                    <div className="home-movie-grid">
+                        {favouriteMovies.map((movie) => (
+                            <article
+                                className="home-movie-card"
+                                key={movie.id}
+                            >
+                                <Poster movie={movie} />
 
-                    <h2>Your collection starts here.</h2>
+                                <h3>{movie.title}</h3>
 
-                    <p>
-                        Save the movies you love and
-                        come back to them whenever you want.
-                    </p>
+                                <p>
+                                    {movie.year} · {movie.genre}
+                                </p>
 
-                    <Link
-                        to="/"
-                        className="favourites-explore"
-                    >
-                        Explore movies
-                    </Link>
-                </div>
+                                <button
+                                    className="favourites-remove"
+                                    onClick={() => handleRemove(movie.id)}
+                                    type="button"
+                                >
+                                    Remove from favourites
+                                </button>
+                            </article>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="favourites-empty">
+                        <span className="favourites-symbol">♡</span>
+
+                        <h2>Your collection starts here.</h2>
+
+                        <p>
+                            Save the movies you love and
+                            come back to them whenever you want.
+                        </p>
+
+                        <Link
+                            to="/"
+                            className="favourites-explore"
+                        >
+                            Explore movies
+                        </Link>
+                    </div>
+                )}
             </section>
         </main>
     </Intro>
 );
 }
+
 export { FavouritesPage };
