@@ -24,7 +24,7 @@ const handleRemove = (id: string) => {
 };
 
 return (
-    <Intro>
+    <Intro showChoiceButton={false}>
         <main className="favourites-page">
             <header className="favourites-header">
                 <Link to="/" className="favourites-logo">
@@ -39,6 +39,7 @@ return (
             </header>
 
             <section className="favourites-hero">
+                <div className="favourites-hero-text">
                 <p className="favourites-eyebrow">
                     YOUR PERSONAL COLLECTION
                 </p>
@@ -49,6 +50,15 @@ return (
                     All the films you love, collected
                     in one place.
                 </p>
+                </div>
+
+                <Link 
+                    to="/the-choice"
+                    className="intro__choice-button favourites-choice-button"
+                >
+                    Choose what you want to watch
+                    <span>→</span>
+                </Link>
             </section>
 
             <section className="favourites-content">

@@ -2,7 +2,13 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { GradientBackground } from "./GradientBackground";
 
-function Intro({ children }: { children: ReactNode }) {
+function Intro({
+children,
+showChoiceButton = true
+}: {
+children: ReactNode;
+showChoiceButton?: boolean;
+}) {
 return (
 <main className="intro">
 <GradientBackground />
@@ -10,12 +16,14 @@ return (
             {children}
         </div>
 
-        <footer className="intro__footer">
-            <Link to="/the-choice" className="intro__choice-button">
-                Choose what you want to watch
-                <span>→</span>
-            </Link>
-        </footer>
+        {showChoiceButton && (
+            <footer className="intro__footer">
+                <Link to="/the-choice" className="intro__choice-button">
+                    Choose what you want to watch
+                    <span className="choice-arrow">→</span>
+                </Link>
+            </footer>
+        )}
     </main>
 );
 }

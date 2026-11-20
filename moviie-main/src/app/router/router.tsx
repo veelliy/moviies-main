@@ -6,40 +6,51 @@ import { ResultPage } from "../../pages/ResultPage";
 import { SharePage } from "../../pages/SharePage";
 import { WatchTogetherPage } from "../../pages/WatchTogether";
 import { FavouritesPage } from "../../pages/FavouritesPage";
+import { MainLayout } from "../../companents/MainLayout";
+import {WatchTogetherSetup} from "../../pages/WatchTogetherSetup";
+
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <HomePage /> ,
+        element: <MainLayout />,
+        children: [
+            {
+                path: "/",
+                element: <HomePage />,
+            },
+            {
+                path: "/favourites",
+                element: <FavouritesPage />,
+            },
+            {
+                path: "/the-choice",
+                element: <WatchTogetherPage />,
+            },
+            {
+                path: "/watch-together-setup",
+                element: <WatchTogetherSetup />,
+            },
+        ],
     },
-     {
+    {
         path: "/share",
-        element: <SharePage/> ,
+        element: <SharePage />,
     },
-     {
+    {
         path: "/game",
-        element: <GamePage/>
+        element: <GamePage />,
     },
-     {
+    {
         path: "/result",
-        element: <ResultPage /> ,
+        element: <ResultPage />,
     },
     {
         path: "/join",
-        element: <JoinPage/>, 
+        element: <JoinPage />,
     },
-    {
-        path: "/the-choice",
-        element: <WatchTogetherPage />
-    },
-    {
-        path: "/favourites",
-        element: <FavouritesPage />
-    }
 ]);
 
 function AppRouter() {
-    return <RouterProvider router={router} />; 
-} 
+    return <RouterProvider router={router} />;
+}
 
-export {AppRouter};
-
+export { AppRouter };

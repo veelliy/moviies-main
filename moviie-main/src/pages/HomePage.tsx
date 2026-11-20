@@ -156,25 +156,6 @@ return (
                 <Link to="/">moviies</Link>
                 <p>Every movie has a feeling.</p>
             </footer>
-
-            <nav className="home-mobile-nav">
-                <Link to="/" className="home-mobile-nav-item">
-                    <span>⌂</span>
-                    Home
-                </Link>
-                <a href="#discover" className="home-mobile-nav-item">
-                    <span>⌕</span>
-                    Discover
-                </a>
-                <Link to="/favourites" className="home-mobile-nav-item">
-                    <span>♡</span>
-                    Favourites
-                </Link>
-                <Link to="/the-choice" className="home-mobile-nav-item">
-                    <span>＋</span>
-                    Together
-                </Link>
-            </nav>
         </main>
     </Intro>
 );

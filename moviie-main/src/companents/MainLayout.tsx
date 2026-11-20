@@ -1,0 +1,20 @@
+import { Outlet, useLocation } from "react-router-dom";
+import { MobileNav } from "./MobileNav";
+
+function MainLayout() {
+const location = useLocation();
+return (
+    <>
+        <div
+            key={location.pathname}
+            className="page-transition"
+        >
+            <Outlet />
+        </div>
+
+        <MobileNav />
+    </>
+);
+}
+
+export { MainLayout };

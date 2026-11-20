@@ -85,6 +85,16 @@ export const isFavourite = (id: string): boolean => {
 return getFavourites().includes(id);
 };
 export const movieIds = new Set(movies.map((m) => m.id));
+// ================================
+// CHOICE — AVAILABLE MOVIES
+// ================================
+
+export const getFavouriteMovies = (): Movie[] => {
+const favouriteIds = new Set(getFavourites());
+return movies.filter((movie) =>
+   favouriteIds.has(movie.id)
+);
+};
 const KEY = "swipey:session:v1";
 
 export const getName = () => {
