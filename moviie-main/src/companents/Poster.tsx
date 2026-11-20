@@ -8,10 +8,12 @@ isFavourite
 
 function Poster({
 movie,
-small = false
+small = false,
+showFavouriteButton = true
 }: {
 movie: Movie;
 small?: boolean;
+showFavouriteButton?: boolean;
 }) {
 const [favourite, setFavourite] = useState(() =>
 isFavourite(movie.id)
@@ -46,14 +48,16 @@ return (
                </div>
            )}
 
-           <button
-               type="button"
-               className={`poster-favourite ${favourite ? "active" : ""}`}
-               onClick={toggleFavourite}
-               aria-label={favourite ? "Remove from favourites" : "Add to favourites"}
-           >
-               {favourite ? "♥️" : "♡"}
-           </button>
+           {showFavouriteButton && (
+               <button
+                   type="button"
+                   className={`poster-favourite ${favourite ? "active" : ""}`}
+                   onClick={toggleFavourite}
+                   aria-label={favourite ? "Remove from favourites" : "Add to favourites"}
+               >
+                   {favourite ? "♥️" : "♡"}
+               </button>
+           )}
        </div>
    </div>
 );

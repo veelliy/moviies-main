@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Intro } from "../companents/Intro";
-import { decodeInvitation, freshSession, getName, saveSession, setName as saveName } from "../modul";
+import { decodeInvitation, freshSession, saveSession, setName as saveName } from "../modul";
 import { Input } from "../companents/Input";
 
 function JoinPage() {
