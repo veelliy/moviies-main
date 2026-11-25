@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Heart, HeartCrack, RotateCcw } from "lucide-react";
 import { Header } from "../companents/Header";
 import { SwipeCard } from "../companents/SwipeCard";
@@ -8,201 +8,252 @@ import { movies, shuffle } from "../modul";
 const PARTICIPANT_STORAGE_KEY = "moviies:group-participant:v2";
 
 type GroupParticipantSession = {
-v: 2;
-type: "participant-invitation";
-groupId: string;
-dataset: "movies-v1";
-movieIds: string[];
-participant: {
-id: string;
-name: string;
-};
-likedIds: string[];
-dislikedIds: string[];
-order: string[];
-votes: { id: string; liked: boolean }[];
+    v: 2;
+    type: "participant-invitation";
+    groupId: string;
+    dataset: "movies-v1";
+    movieIds: string[];
+    participant: {
+        id: string;
+        name: string;
+    };
+    likedIds: string[];
+    dislikedIds: string[];
+    order: string[];
+    votes: { id: string; liked: boolean }[];
 };
 
 function loadParticipantSession(): GroupParticipantSession | null {
-try {
-const saved = localStorage.getItem(PARTICIPANT_STORAGE_KEY);
-if (!saved) return null;
-const session = JSON.parse(saved);
+    try {
+        const saved = localStorage.getItem(PARTICIPANT_STORAGE_KEY);
+        if (!saved) return null;
 
-    if (
-        session.v !== 2 ||
-        session.type !== "participant-invitation" ||
-        !Array.isArray(session.movieIds) ||
-        !session.participant?.id
-    ) {
+        const session = JSON.parse(saved);
+
+        if (
+            session.v !== 2 ||
+            session.type !== "participant-invitation" ||
+            !Array.isArray(session.movieIds) ||
+            !session.participant?.id
+        ) {
+            return null;
+        }
+
+        const validMovieIds = session.movieIds.filter(
+            (id: unknown): id is string =>
+                typeof id === "string" &&
+                movies.some((movie) => movie.id === id)
+        );
+
+        if (validMovieIds.length === 0) return null;
+
+        const savedOrder = Array.isArray(session.order)
+            ? session.order.filter(
+                (id: unknown): id is string =>
+                    typeof id === "string" && validMovieIds.includes(id)
+            )
+            : [];
+
+        const order =
+            savedOrder.length === validMovieIds.length
+                ? savedOrder
+                : shuffle([...validMovieIds]);
+
+        const updatedSession: GroupParticipantSession = {
+            ...session,
+            movieIds: validMovieIds,
+            order,
+            votes: Array.isArray(session.votes) ? session.votes : [],
+            likedIds: Array.isArray(session.likedIds)
+                ? session.likedIds
+                : [],
+            dislikedIds: Array.isArray(session.dislikedIds)
+                ? session.dislikedIds
+                : [],
+        };
+
+        localStorage.setItem(
+            PARTICIPANT_STORAGE_KEY,
+            JSON.stringify(updatedSession)
+        );
+
+        return updatedSession;
+    } catch {
         return null;
     }
-
-    const order =
-        Array.isArray(session.order) && session.order.length > 0
-            ? session.order
-            : shuffle([...session.movieIds]);
-
-    const updatedSession: GroupParticipantSession = {
-        ...session,
-        order,
-        votes: Array.isArray(session.votes) ? session.votes : [],
-        likedIds: Array.isArray(session.likedIds)
-            ? session.likedIds
-            : [],
-        dislikedIds: Array.isArray(session.dislikedIds)
-            ? session.dislikedIds
-            : [],
-    };
-
-    localStorage.setItem(
-        PARTICIPANT_STORAGE_KEY,
-        JSON.stringify(updatedSession)
-    );
-
-    return updatedSession;
-} catch {
-    return null;
-}
 }
 
 function GroupGamePage() {
-const navigate = useNavigate();
-const [session, setSession] = useState<GroupParticipantSession | null>(
-    () => loadParticipantSession()
-);
+    const navigate = useNavigate();
 
-const [locked, setLocked] = useState(false);
+    const [session, setSession] = useState<GroupParticipantSession | null>(
+        () => loadParticipantSession()
+    );
+    const [locked, setLocked] = useState(false);
+    const actionLock = useRef(false);
 
-useEffect(() => {
-    if (!session) {
-        navigate("/group-join", { replace: true });
-        return;
-    }
+    useEffect(() => {
+        if (!session) {
+            navigate("/group-join", { replace: true });
+            return;
+        }
 
-    if (session.votes.length >= session.order.length) {
-        navigate("/group-submit", { replace: true });
-    }
-}, [session, navigate]);
+        actionLock.current = false;
+        setLocked(false);
 
-if (!session) return null;
+        if (session.votes.length >= session.order.length) {
+            navigate("/group-submit", { replace: true });
+        }
+    }, [session, navigate]);
 
-const currentIndex = session.votes.length;
-const currentId = session.order[currentIndex];
-const movie = movies.find((item) => item.id === currentId);
+    if (!session) return null;
 
-const update = (liked: boolean) => {
-    if (locked || !movie) return;
+    const currentIndex = session.votes.length;
+    const totalMovies = session.order.length;
+    const currentId = session.order[currentIndex];
+    const movie = movies.find((item) => item.id === currentId);
+    const progress = totalMovies > 0
+        ? Math.min((currentIndex / totalMovies) * 100, 100)
+        : 0;
 
-    setLocked(true);
+    const update = (liked: boolean) => {
+        if (actionLock.current || locked || !movie) return;
 
-    const next: GroupParticipantSession = {
-        ...session,
-        votes: [
-            ...session.votes,
-            { id: movie.id, liked },
-        ],
-        likedIds: liked
-            ? [...session.likedIds, movie.id]
-            : session.likedIds,
-        dislikedIds: !liked
-            ? [...session.dislikedIds, movie.id]
-            : session.dislikedIds,
+        actionLock.current = true;
+        setLocked(true);
+
+        const next: GroupParticipantSession = {
+            ...session,
+            votes: [
+                ...session.votes,
+                { id: movie.id, liked },
+            ],
+            likedIds: liked
+                ? [...session.likedIds.filter((id) => id !== movie.id), movie.id]
+                : session.likedIds.filter((id) => id !== movie.id),
+            dislikedIds: !liked
+                ? [...session.dislikedIds.filter((id) => id !== movie.id), movie.id]
+                : session.dislikedIds.filter((id) => id !== movie.id),
+        };
+
+        try {
+            localStorage.setItem(
+                PARTICIPANT_STORAGE_KEY,
+                JSON.stringify(next)
+            );
+            setSession(next);
+        } catch {
+            actionLock.current = false;
+            setLocked(false);
+            window.alert("Your vote could not be saved. Please try again.");
+        }
     };
 
-    localStorage.setItem(
-        PARTICIPANT_STORAGE_KEY,
-        JSON.stringify(next)
-    );
+    const undo = () => {
+        if (!session.votes.length || actionLock.current || locked) return;
 
-    setSession(next);
-    setLocked(false);
-};
+        actionLock.current = true;
+        setLocked(true);
 
-const undo = () => {
-    if (!session.votes.length || locked) return;
+        const lastVote = session.votes[session.votes.length - 1];
 
-    const lastVote = session.votes[session.votes.length - 1];
+        const next: GroupParticipantSession = {
+            ...session,
+            votes: session.votes.slice(0, -1),
+            likedIds: session.likedIds.filter(
+                (id) => !(lastVote.id === id && lastVote.liked)
+            ),
+            dislikedIds: session.dislikedIds.filter(
+                (id) => !(lastVote.id === id && !lastVote.liked)
+            ),
+        };
 
-    const next: GroupParticipantSession = {
-        ...session,
-        votes: session.votes.slice(0, -1),
-        likedIds: session.likedIds.filter(
-            (id) => !(lastVote.id === id && lastVote.liked)
-        ),
-        dislikedIds: session.dislikedIds.filter(
-            (id) => !(lastVote.id === id && !lastVote.liked)
-        ),
+        try {
+            localStorage.setItem(
+                PARTICIPANT_STORAGE_KEY,
+                JSON.stringify(next)
+            );
+            setSession(next);
+        } catch {
+            actionLock.current = false;
+            setLocked(false);
+            window.alert("Your vote could not be updated. Please try again.");
+        }
     };
 
-    localStorage.setItem(
-        PARTICIPANT_STORAGE_KEY,
-        JSON.stringify(next)
-    );
+    return (
+        <main className="workspace voting-page">
+            <Header />
 
-    setSession(next);
-};
+            <section className="swipe-area">
+                <div className="voting-heading">
+                    <p className="home-eyebrow">WATCH TOGETHER</p>
+                    <h1>{session.participant.name}'s turn</h1>
+                    <p>Swipe right to like, left to pass.</p>
+                </div>
 
-return (
-    <main className="workspace">
-        <Header />
+                <div className="vote-progress" aria-label={`Movie ${Math.min(currentIndex + 1, totalMovies)} of ${totalMovies}`}>
+                    <div className="vote-progress-topline">
+                        <span>YOUR MOVIE SELECTION</span>
+                        <strong>{Math.min(currentIndex + 1, totalMovies)} / {totalMovies}</strong>
+                    </div>
+                    <div className="vote-progress-track">
+                        <span style={{ width: `${progress}%` }} />
+                    </div>
+                </div>
 
-        <div className="swipe-area">
-            <p className="home-eyebrow">
-                WATCH TOGETHER · {session.participant.name}
-            </p>
-
-            <p className="group-game-progress">
-                {Math.min(currentIndex + 1, session.order.length)} / {session.order.length}
-            </p>
-
-            {movie ? (
-                <Fragment key={movie.id}>
-                    <SwipeCard
-                        key={movie.id}
-                        movie={movie}
-                        onChoice={update}
-                        disabled={locked}
-                    />
-
-                    <div className="vote-buttons">
-                        <button
-                            onClick={() => update(false)}
-                            className="no"
-                            aria-label="Dislike"
+                {movie ? (
+                    <Fragment key={movie.id}>
+                        <SwipeCard
+                            key={movie.id}
+                            movie={movie}
+                            onChoice={update}
                             disabled={locked}
-                        >
-                            <HeartCrack size={64} />
-                        </button>
+                        />
 
-                        <button
-                            onClick={() => update(true)}
-                            className="yes"
-                            aria-label="Like"
-                            disabled={locked}
-                        >
-                            <Heart size={64} />
+                        <div className="vote-buttons">
+                            <button
+                                type="button"
+                                onClick={() => update(false)}
+                                className="vote-button vote-button--no"
+                                aria-label="Dislike this movie"
+                                disabled={locked}
+                            >
+                                <HeartCrack size={27} />
+                                <span>Dislike</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => update(true)}
+                                className="vote-button vote-button--yes"
+                                aria-label="Like this movie"
+                                disabled={locked}
+                            >
+                                <Heart size={27} />
+                                <span>Like</span>
+                            </button>
+                        </div>
+                    </Fragment>
+                ) : (
+                    <div className="voting-error">
+                        <h2>We couldn't load this movie.</h2>
+                        <p>Please return to the invitation and try again.</p>
+                        <Link to="/the-choice">Back to The Choice</Link>
+                    </div>
+                )}
+
+                {session.votes.length > 0 && (
+                    <div className="bottom-actions">
+                        <button type="button" onClick={undo} disabled={locked}>
+                            <RotateCcw size={16} />
+                            Undo last vote
                         </button>
                     </div>
-                </Fragment>
-            ) : (
-                <p className="home-eyebrow">
-                    No more movies available.
-                </p>
-            )}
-
-            {session.votes.length > 0 && (
-                <div className="bottom-actions">
-                    <button onClick={undo} disabled={locked}>
-                        <RotateCcw size={17} />
-                        Undo
-                    </button>
-                </div>
-            )}
-        </div>
-    </main>
-);
+                )}
+            </section>
+        </main>
+    );
 }
 
 export { GroupGamePage };
-            

@@ -1,0 +1,41 @@
+MOVIIES — RESPONSIVE UPDATE
+
+This archive contains the full project with the responsive layout and Watch Together polish applied.
+
+WHAT CHANGED
+- Added a desktop sidebar navigation.
+- Kept the existing mobile bottom navigation and mobile-first visual direction.
+- Added a compact icon-only sidebar for medium/tablet widths.
+- Fixed the misplaced closing brace in the mobile CSS media query. Previously, several mobile-only rules were affecting desktop.
+- Added consistent styling for Watch Together setup, invitations, participant join, voting, submission, import, and group results.
+- Fixed the voting progress display and improved vote locking so rapid taps cannot add duplicate votes.
+- Improved swipe-card poster sizing and swipe direction handling.
+- Kept the existing v1 two-person routes and v2 group flow.
+- Added consistent styling for Personal Picks and legacy result/share pages.
+
+FILES UPDATED
+- src/App.css
+- src/app/router/router.tsx
+- src/companents/DesktopSidebar.tsx (new)
+- src/companents/MainLayout.tsx
+- src/companents/MobileNav.tsx
+- src/companents/Intro.tsx
+- src/companents/Header.tsx
+- src/companents/SwipeCard.tsx
+- src/pages/GroupGamePage.tsx
+- src/pages/GroupOrganizerGamePage.tsx
+- src/pages/GroupImportPage.tsx
+
+HOW TO APPLY
+1. Make a backup copy of your current MOVIIES project folder.
+2. Extract this archive into a separate folder.
+3. Copy the extracted project contents into your existing MOVIIES folder.
+4. Allow Windows to replace files when asked. Do not delete your existing node_modules folder.
+5. Open the project in VS Code and run: npm run dev
+
+IMPORTANT
+- node_modules is intentionally not included.
+- No API keys, .env files, or credentials are included.
+- The project still uses the existing Favourites-only movie source for the current Watch Together / Choose for Myself flows.
+- Group voting remains a QR/link + manual import flow. It does not provide automatic real-time cross-device sync.
+- A full npm build could not be run in the preparation environment because dependency installation timed out. CSS syntax and local relative import paths were checked, but please run the project locally and tell me the first error if one appears.

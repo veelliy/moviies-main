@@ -33,13 +33,15 @@ return (
        style={{ x, rotate }}
        drag={disabled ? false : "x"}
        dragConstraints={{ left: 0, right: 0 }}
-       dragElastic={0.95}
+       dragElastic={0.9}
+       dragMomentum={false}
        onDragEnd={(_e, info) => {
            if (
                Math.abs(info.offset.x) > 95 ||
                Math.abs(info.velocity.x) > 650
            ) {
-               choose(info.offset.x > 0);
+               const direction = info.offset.x || info.velocity.x;
+               choose(direction > 0);
            } else {
                animate(x, 0, {
                    type: "spring",

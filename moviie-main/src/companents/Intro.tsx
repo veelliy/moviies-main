@@ -10,7 +10,7 @@ children: ReactNode;
 showChoiceButton?: boolean;
 }) {
 return (
-<main className="intro">
+<div className="intro">
 <GradientBackground />
 <div className="intro__content">
             {children}
@@ -24,7 +24,7 @@ return (
                 </Link>
             </footer>
         )}
-    </main>
+    </div>
 );
 }
 

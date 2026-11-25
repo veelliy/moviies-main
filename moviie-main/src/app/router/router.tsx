@@ -7,8 +7,8 @@ import { SharePage } from "../../pages/SharePage";
 import { WatchTogetherPage } from "../../pages/WatchTogether";
 import { FavouritesPage } from "../../pages/FavouritesPage";
 import { MainLayout } from "../../companents/MainLayout";
-import {WatchTogetherSetup} from "../../pages/WatchTogetherSetup";
-import {ChooseMyself } from "../../pages/ChooseMyself";
+import { WatchTogetherSetup } from "../../pages/WatchTogetherSetup";
+import { ChooseMyself } from "../../pages/ChooseMyself";
 import { PersonalPicks } from "../../pages/PersonalPicks";
 import { GroupSharePage } from "../../pages/GroupSharePage";
 import { GroupJoinPage } from "../../pages/GroupJoinPage";
@@ -50,10 +50,10 @@ const router = createBrowserRouter([
                 path: "/group-share",
                 element: <GroupSharePage />,
             },
-            { 
-                path: "/group-join", 
-                element: <GroupJoinPage />
-             },
+            {
+                path: "/group-join",
+                element: <GroupJoinPage />,
+            },
             {
                 path: "/group-game",
                 element: <GroupGamePage />,
@@ -64,33 +64,33 @@ const router = createBrowserRouter([
             },
             {
                 path: "/group-submit",
-                element: <GroupSubmitPage />
+                element: <GroupSubmitPage />,
             },
             {
                 path: "/group-import",
-                element: <GroupImportPage />
+                element: <GroupImportPage />,
             },
             {
                 path: "/group-results",
-                element: <GroupResultsPage />
+                element: <GroupResultsPage />,
+            },
+            {
+                path: "/share",
+                element: <SharePage />,
+            },
+            {
+                path: "/game",
+                element: <GamePage />,
+            },
+            {
+                path: "/result",
+                element: <ResultPage />,
+            },
+            {
+                path: "/join",
+                element: <JoinPage />,
             },
         ],
-    },
-    {
-        path: "/share",
-        element: <SharePage />,
-    },
-    {
-        path: "/game",
-        element: <GamePage />,
-    },
-    {
-        path: "/result",
-        element: <ResultPage />,
-    },
-    {
-        path: "/join",
-        element: <JoinPage />,
     },
 ]);
 

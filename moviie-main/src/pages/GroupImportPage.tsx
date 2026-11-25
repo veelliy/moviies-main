@@ -163,6 +163,7 @@ useEffect(() => {
                 setMessage(
                     `${participant.name}'s results have already been added.`
                 );
+                setShowResultsLink(true);
                 return;
             }
     
